@@ -14,10 +14,10 @@
             <form action="/admin/phanquyen/sua" method="POST">
                 @csrf
                 <br>
-                <input type="hidden" class="form-control" name="id_phan_quyen" value="{{$phanquyen['id_phan_quyen']}}"/>
+                <input type="hidden" class="form-control" name="id_phan_quyen" value="{{$phanquyen->id_phan_quyen}}"/>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_phan_quyen" value="{{$phanquyen['ten_phan_quyen']}}" required/>
+                    <input type="input" class="form-control" name="ten_phan_quyen" value="{{$phanquyen->ten_phan_quyen}}" required/>
                     <label class="form-label" >Tên phân quyền</label>
                 </div>
 

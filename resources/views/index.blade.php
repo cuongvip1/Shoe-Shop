@@ -33,6 +33,12 @@
         @case('tai-khoan')
             @include('app.taikhoan.taikhoan')
             @break
+        @case('tai-khoan-lich-su')
+            @include('app.taikhoan.history')
+            @break
+        @case('tai-khoan-lich-su-xem')
+            @include('app.taikhoan.history_show')
+            @break
 
         @default
             @include('app.app.body')

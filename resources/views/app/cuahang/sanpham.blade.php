@@ -2,10 +2,10 @@
 
 @section('content')
 
-    <div class="card mb-3 shadow-5" style="background-color: #EEEEEE">
+            <div class="card mb-3 shadow-5" style="background-color: #EEEEEE">
         <div class="card-body" style="margin-top:40px">
             <center>
-                <h3 class="card-title" style="text-transform: uppercase;">SẢN PHẨM {{ $giay['ten_giay'] }}</h3>
+                <h3 class="card-title" style="text-transform: uppercase;">SẢN PHẨM {{ $giay->ten_giay }}</h3>
             </center>
         </div>
         <br>
@@ -19,12 +19,12 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/trang-chu">Trang chủ</a></li>
                         <li class="breadcrumb-item"><a href="/cua-hang">Cửa hàng</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $giay['ten_giay'] }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $giay->ten_giay }}</li>
                     </ol>
                     <br>
                 </div>
                 @foreach ($gio_hangs as $id => $giohang)
-                    @if ($giohang['ten_giay'] == $giay['ten_giay'])
+                    @if ($giohang['ten_giay'] == $giay->ten_giay)
                         <div class="col-md-5">
                             <div class="alert alert-success" role="alert">
                                 <i class="fas fa-check-circle"></i>&ensp;Sản phẩm này đã được thêm vào giỏ hàng của bạn!
@@ -40,25 +40,25 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="/storage/images/{{ $giay['hinh_anh_1'] }}" alt="..." class="img-fluid rounded-start" />
+                        <img src="/storage/images/{{ $giay->hinh_anh_1 }}" alt="..." class="img-fluid rounded-start" />
                         {{-- style="height: 432px" --}}
                         <div class="row ">
-                            @if ($giay['hinh_anh_2'])
-                                <div class="col border ripple"><img src="/storage/images/{{ $giay['hinh_anh_2'] }}"
+                            @if ($giay->hinh_anh_2)
+                                <div class="col border ripple"><img src="/storage/images/{{ $giay->hinh_anh_2 }}"
                                         alt="..." class="img-fluid rounded-start" /></div>
-                            @else <div class="col border ripple"><img src="/storage/images/{{ $giay['hinh_anh_1'] }}"
-                                        alt="..." class="img-fluid rounded-start" /></div>
-                            @endif
-                            @if ($giay['hinh_anh_3'])
-                                <div class="col ripple"><img src="/storage/images/{{ $giay['hinh_anh_3'] }}" alt="..."
-                                        class="img-fluid rounded-start" /></div>
-                            @else <div class="col ripple"><img src="/storage/images/{{ $giay['hinh_anh_1'] }}"
+                            @else <div class="col border ripple"><img src="/storage/images/{{ $giay->hinh_anh_1 }}"
                                         alt="..." class="img-fluid rounded-start" /></div>
                             @endif
-                            @if ($giay['hinh_anh_4'])
-                                <div class="col ripple"><img src="/storage/images/{{ $giay['hinh_anh_4'] }}" alt="..."
+                            @if ($giay->hinh_anh_3)
+                                <div class="col ripple"><img src="/storage/images/{{ $giay->hinh_anh_3 }}" alt="..."
                                         class="img-fluid rounded-start" /></div>
-                            @else <div class="col ripple"><img src="/storage/images/{{ $giay['hinh_anh_1'] }}"
+                            @else <div class="col ripple"><img src="/storage/images/{{ $giay->hinh_anh_1 }}"
+                                        alt="..." class="img-fluid rounded-start" /></div>
+                            @endif
+                            @if ($giay->hinh_anh_4)
+                                <div class="col ripple"><img src="/storage/images/{{ $giay->hinh_anh_4 }}" alt="..."
+                                        class="img-fluid rounded-start" /></div>
+                            @else <div class="col ripple"><img src="/storage/images/{{ $giay->hinh_anh_1 }}"
                                         alt="..." class="img-fluid rounded-start" /></div>
                             @endif
                         </div>
@@ -81,26 +81,26 @@
                                     )</small>
                                 <div id="RateDanhGia" class="float-end text-info"></div>
                             </div>
-                            <h3 class="card-title" style="text-transform: uppercase;">{{ $giay['ten_giay'] }}</h3>
+                            <h3 class="card-title" style="text-transform: uppercase;">{{ $giay->ten_giay }}</h3>
 
                             <h4 class="card-text text-success">
                                 @if ($km = 0)@endif
-                                @foreach ($khuyenmais as $khuyenmai)
-                                    @if ($khuyenmai['ten_khuyen_mai'] == $giay['ten_khuyen_mai'])
-                                        @php $km = sprintf('%d', $giay['don_gia'] * 0.01 * $khuyenmai['gia_tri_khuyen_mai']) @endphp
-                                        @if ($gtkm = $khuyenmai['gia_tri_khuyen_mai'])@endif
+                                @foreach (($khuyenmais ?? []) as $khuyenmai)
+                                    @if ($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
+                                        @php $km = sprintf('%d', $giay->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai) @endphp
+                                        @if ($gtkm = $khuyenmai->gia_tri_khuyen_mai)@endif
                                     @endif
                                 @endforeach
 
-                                <b>{{ number_format($giay['don_gia'] - $km, 0, ',', ',') }} VNĐ</b>
-                                @if ($km != 0)<del class="card-text text-danger">{{ number_format($giay['don_gia'], 0, ',', ',') }} VNĐ</del>@endif
+                                <b>{{ number_format($giay->don_gia - $km, 0, ',', ',') }} VNĐ</b>
+                                @if ($km != 0)<del class="card-text text-danger">{{ number_format($giay->don_gia, 0, ',', ',') }} VNĐ</del>@endif
                             </h4>
 
                             <br>
-                            <p class="card-text"><b>Mô tả:</b>{!! $giay['mo_ta'] !!}</p>
-                            <p class="card-text"><b>Loại giày:</b> {{ $giay['ten_loai_giay'] }}&emsp;<i
+                            <p class="card-text"><b>Mô tả:</b>{!! $giay->mo_ta !!}</p>
+                            <p class="card-text"><b>Loại giày:</b> {{ $giay->ten_loai_giay }}&emsp;<i
                                     class="fab fa-squarespace"></i>&emsp; <b>Thương hiệu:</b>
-                                {{ $giay['ten_thuong_hieu'] }}
+                                {{ $giay->ten_thuong_hieu }}
                             </p>
 
                             <p class="card-text">
@@ -108,9 +108,9 @@
                             </p>
 
 
-                            <a href="/cua-hang/san-pham={{ $giay['id_giay'] }}/them" type="button" class="btn btn-info"
+                            <a href="/cua-hang/san-pham={{ $giay->id_giay }}/them" type="button" class="btn btn-info"
                                 style="margin-top: 10px"
-                                data-url="{{ route('them-vao-gio-hang', ['id' => $giay['id_giay']]) }}">
+                                data-url="{{ route('them-vao-gio-hang', ['id' => $giay->id_giay]) }}">
                                 <i class="far fa-heart"></i>
                                 &ensp;Thêm vào giỏ hàng
                             </a>
@@ -149,22 +149,22 @@
                     <div class="tab-content" id="ex2-content">
                         <div class="tab-pane fade show active" id="ex2-tabs-1" role="tabpanel" aria-labelledby="ex2-tab-1">
                             <br>
-                            {!! $giay['mo_ta'] !!}<br>
+                            {!! $giay->mo_ta !!}<br>
                             <p><b>Ngày ra mắt: </b>Ngày 11 tháng 11 năm 2021</p>
                             <p><b>Thiết kế: </b>Yeezy 350</p>
-                            <p><b>Mã sản phẩm: </b>{{ $giay['id_giay'] }}</p>
+                            <p><b>Mã sản phẩm: </b>{{ $giay->id_giay }}</p>
                             <br>
                         </div>
                         <div class="tab-pane fade" id="ex2-tabs-2" role="tabpanel" aria-labelledby="ex2-tab-2">
                             <br>
-                            <p>✔️ <b>Mã giày: </b>{{ $giay['id_giay'] }}</p>
-                            <p>✔️ <b>Tên giày: </b>{{ $giay['ten_giay'] }}</p>
-                            <p>✔️ <b>Loại giày: </b>{{ $giay['ten_loai_giay'] }}</p>
-                            <p>✔️ <b>Thương hiệu: </b>{{ $giay['ten_thuong_hieu'] }}</p>
-                            <p>✔️ <b>Giá gốc: </b>{{ number_format($giay['don_gia']) }} VNĐ</p>
-                            <p>✔️ <b>Số lượng còn lại: </b>{{ $giay['so_luong'] }}</p>
-                            <p>✔️ <b>Khuyến mãi: </b>{{ $giay['ten_khuyen_mai'] }} (-{{ $gtkm }}%)</p>
-                            <p>✔️ <b>Đánh giá: </b>{{ $giay['danh_gia'] }}</p>
+                            <p>✔️ <b>Mã giày: </b>{{ $giay->id_giay }}</p>
+                            <p>✔️ <b>Tên giày: </b>{{ $giay->ten_giay }}</p>
+                            <p>✔️ <b>Loại giày: </b>{{ $giay->ten_loai_giay }}</p>
+                            <p>✔️ <b>Thương hiệu: </b>{{ $giay->ten_thuong_hieu }}</p>
+                            <p>✔️ <b>Giá gốc: </b>{{ number_format($giay->don_gia) }} VNĐ</p>
+                            <p>✔️ <b>Số lượng còn lại: </b>{{ $giay->so_luong }}</p>
+                                                <p>✔️ <b>Khuyến mãi: </b>{{ $giay->ten_khuyen_mai }} (-{{ $gtkm }}%)</p>
+                            <p>✔️ <b>Đánh giá: </b>{{ number_format($soluongdanhgia['danh_gia'] ?? 0, 1) }} sao ({{ $soluongdanhgia['count_danh_gia'] ?? 0 }} đánh giá)</p>
                             <br>
                         </div>
                         <div class="tab-pane fade" id="ex2-tabs-3" role="tabpanel" aria-labelledby="ex2-tab-3">
@@ -197,7 +197,10 @@
                                             </div>
                                             <div class="col-10">
                                                 <small>{{ $danhgia->ten_danh_gia }}</small>
-                                                <small class="float-end">{{ $danhgia->updated_at }}</small>
+                                                <small class="float-end">
+                                                    {{ \Carbon\Carbon::parse(data_get($danhgia, 'updated_at'))->format('d/m/Y') }}
+                                                    &nbsp;-&nbsp;{{ data_get($danhgia, 'danh_gia', 0) }} sao
+                                                </small>
                                                 <br>
                                                 <p>{{ $danhgia->danh_gia_binh_luan }}</p>
                                             </div>
@@ -206,7 +209,11 @@
                                     @endforeach
 
                                     <div class="pagination pagination-circle justify-content-end">
-                                        <center>{{ $danhgias->links() }}</center>
+                                        <center>
+                                            @if(is_object($danhgias) && method_exists($danhgias, 'links'))
+                                                {{ $danhgias->links() }}
+                                            @endif
+                                        </center>
                                     </div>
 
                                     {{-- <div id="fb-root"></div>
@@ -215,7 +222,7 @@
                                                 data-width="" data-numposts="5"></div> --}}
                                 </div>
                                 @foreach ($danh_gias as $id => $danh_gia)
-                                    @if ($danh_gia['ten_giay'] == $giay['ten_giay'])
+                                    @if (data_get($danh_gia, 'ten_giay') == $giay->ten_giay)
                                         @php $checkk = 1; @endphp
                                     @endif
                                 @endforeach
@@ -226,18 +233,18 @@
                                         <h5 class="float-start">ĐÁNH GIÁ SẢN PHẨM NÀY</h5>
 
                                         <div id="rateYo" class=" float-end text-info"></div><br><br>
-                                        <form action="/cua-hang/san-pham={{ $giay['id_giay'] }}/danh-gia" method="POST">
+                                        <form action="/cua-hang/san-pham={{ $giay->id_giay }}/danh-gia" method="POST">
                                             @csrf
                                             <input type="hidden" class="form-control" name="danh_gia" id="danh_gia"
                                                 value="4.5">
                                             <input type="hidden" class="form-control" name="id_user"
-                                                value="{{ $data['id'] }}">
+                                                value="{{ $data->id }}">
                                             <input type="hidden" class="form-control" name="id_giay"
-                                                value="{{ $giay['id_giay'] }}">
+                                                value="{{ $giay->id_giay }}">
 
                                             <div class="form-outline mb-4">
                                                 <input type="input" class="form-control" name="ten_danh_gia" required
-                                                    value="{{ $data['ten_nguoi_dung'] }}" />
+                                                    value="{{ $data->ten_nguoi_dung }}" />
                                                 <label class="form-label">Tên</label>
                                             </div>
                                             <div class="form-outline">
@@ -306,9 +313,9 @@
                                                     <h4 class="card-title">{{ $giaytuongtu->ten_giay }}</h4>
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
-                                                        @foreach ($khuyenmais as $khuyenmai)
-                                                            @if ($khuyenmai['ten_khuyen_mai'] == $giaytuongtu->ten_khuyen_mai)
-                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                                        @foreach (($khuyenmais ?? []) as $khuyenmai)
+                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach
 
@@ -347,9 +354,9 @@
                                                     <h4 class="card-title">{{ $giaytuongtu->ten_giay }}</h4>
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
-                                                        @foreach ($khuyenmais as $khuyenmai)
-                                                            @if ($khuyenmai['ten_khuyen_mai'] == $giaytuongtu->ten_khuyen_mai)
-                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                                        @foreach (($khuyenmais ?? []) as $khuyenmai)
+                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach
 
@@ -389,9 +396,9 @@
                                                     <h4 class="card-title">{{ $giaytuongtu->ten_giay }}</h4>
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
-                                                        @foreach ($khuyenmais as $khuyenmai)
-                                                            @if ($khuyenmai['ten_khuyen_mai'] == $giaytuongtu->ten_khuyen_mai)
-                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                                        @foreach (($khuyenmais ?? []) as $khuyenmai)
+                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                                @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach
 

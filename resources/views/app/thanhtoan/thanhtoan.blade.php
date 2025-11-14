@@ -69,12 +69,12 @@
 
                         <div class="form-outline">
                             <input type="text" class="form-control" name="ten_nguoi_nhan"
-                                value="{{ $data['ten_nguoi_dung'] }}" required />
+                                value="{{ $data->ten_nguoi_dung }}" required />
                             <label class="form-label">Tên người nhận</label>
                         </div>
                         <br>
                         <div class="form-outline">
-                            <input type="text" class="form-control" name="sdt" value="{{ $data['sdt'] }}" required />
+                            <input type="text" class="form-control" name="sdt" value="{{ $data->sdt }}" required />
                             <label class="form-label">Số điện thoại</label>
                         </div>
                         <br>

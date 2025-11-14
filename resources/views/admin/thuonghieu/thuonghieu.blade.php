@@ -23,12 +23,12 @@
                 <tbody>
                     @foreach ($thuonghieus as $thuonghieu)
                     <tr>
-                        <th scope="row">{{$thuonghieu['id_thuong_hieu']}}</th>
-                        <td>{{$thuonghieu['ten_thuong_hieu']}}</td>
+                        <th scope="row">{{$thuonghieu->id_thuong_hieu}}</th>
+                        <td>{{$thuonghieu->ten_thuong_hieu}}</td>
                         <td>
                             <!-- <a href="" type="button" class="btn btn-success btn-rounded" target="_blank">Xem</a> -->
-                            <a href="/admin/thuonghieu/sua/id={{$thuonghieu['id_thuong_hieu']}}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
-                            <a href="/admin/thuonghieu/xoa/id={{$thuonghieu['id_thuong_hieu']}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
+                            <a href="/admin/thuonghieu/sua/id={{$thuonghieu->id_thuong_hieu}}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
+                            <a href="/admin/thuonghieu/xoa/id={{$thuonghieu->id_thuong_hieu}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
                                 class="btn btn-danger btn-rounded">Xóa</a>
                         </td>
                     </tr>

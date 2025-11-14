@@ -25,7 +25,7 @@
                     <label class="form-label">Loại giày</label>
                     <datalist id="loai_giay">
                         @foreach ($loaigiays as $loaigiay)
-                            <option value="{{$loaigiay['ten_loai_giay']}}">
+                            <option value="{{ data_get($loaigiay, 'ten_loai_giay') }}">
                         @endforeach
                     </datalist>
                 </div>
@@ -35,7 +35,7 @@
                     <label class="form-label">Thương hiệu</label>
                     <datalist id="thuong_hieu">
                         @foreach ($thuonghieus as $thuonghieu)
-                            <option value="{{$thuonghieu['ten_thuong_hieu']}}">
+                            <option value="{{ data_get($thuonghieu, 'ten_thuong_hieu') }}">
                         @endforeach
                     </datalist>
                 </div>
@@ -80,7 +80,7 @@
                     <label class="form-label">Khuyến mãi</label>
                     <datalist id="khuyen_mai">
                         @foreach ($khuyenmais as $khuyenmai)
-                            <option value="{{$khuyenmai['ten_khuyen_mai']}}">
+                            <option value="{{ data_get($khuyenmai, 'ten_khuyen_mai') }}">
                         @endforeach
                     </datalist>
                 </div>

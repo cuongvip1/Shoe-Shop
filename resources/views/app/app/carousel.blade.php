@@ -7,7 +7,7 @@
 
 	<div class="carousel-inner">
 		<div class="carousel-item active">
-			<img src="{{ URL('images1/banner1.jpg') }}" class="d-block w-100" alt="..."/>
+			<img src="{{ URL('images1/banner1.jpg') }}" class="d-block mx-auto" alt="..." style="width:100%; max-width:1280px; aspect-ratio:16/9; object-fit:cover;"/>
 
 			<div class="carousel-caption d-none d-md-block">
 				<h5>ABBEY Shop</h5>
@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="carousel-item">
-			<img src="{{ URL('images1/banner2.jpg') }}" class="d-block w-100" alt="..."/>
+			<img src="{{ URL('images1/banner2.jpg') }}" class="d-block mx-auto" alt="..." style="width:100%; max-width:1280px; aspect-ratio:16/9; object-fit:cover;"/>
 			<div class="carousel-caption d-none d-md-block">
 				<h5>ABBEY Shop</h5>
 				<p>Mang lại cho bạn những đôi giày chất lượng nhất.</p>
@@ -24,7 +24,7 @@
 		</div>
 
 		<!-- <div class="carousel-item">
-			<img src="{{ URL('images1/banner2.jpg') }}" class="d-block w-100" alt="..."/>
+			<img src="{{ URL('images1/banner2.jpg') }}" class="d-block mx-auto" alt="..." style="width:100%; max-width:1280px; aspect-ratio:16/9; object-fit:cover;"/>
 
 			<div class="carousel-caption d-none d-md-block">
 				<h5>Restaurant Manager</h5>

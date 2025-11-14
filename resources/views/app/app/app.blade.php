@@ -160,6 +160,7 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <li><a class="dropdown-item" href="/tai-khoan">Tài khoản</a></li>
+                                    <li><a class="dropdown-item" href="/tai-khoan/lich-su">Lịch sử đơn hàng</a></li>
                                     <li><a class="dropdown-item" href="/auth/logoff">Đăng xuất</a></li>
                                     @if (session()->get(key: 'check') == 1)
                                         <li><a class="dropdown-item" href="/admin">Trang Quản lý</a></li>

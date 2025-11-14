@@ -14,10 +14,10 @@
             <form action="/admin/loaigiay/sua" method="POST">
                 @csrf
                 <br>
-                <input type="hidden" class="form-control" name="id_loai_giay" value="{{$loaigiay['id_loai_giay']}}"/>
+                <input type="hidden" class="form-control" name="id_loai_giay" value="{{$loaigiay->id_loai_giay}}"/>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_loai_giay" value="{{$loaigiay['ten_loai_giay']}}" required/>
+                    <input type="input" class="form-control" name="ten_loai_giay" value="{{$loaigiay->ten_loai_giay}}" required/>
                     <label class="form-label" >Tên loại giày</label>
                 </div>
 

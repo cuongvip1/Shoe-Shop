@@ -14,10 +14,10 @@
             <form action="/admin/thuonghieu/sua" method="POST">
                 @csrf
                 <br>
-                <input type="hidden" class="form-control" name="id_thuong_hieu" value="{{$thuonghieu['id_thuong_hieu']}}"/>
+                <input type="hidden" class="form-control" name="id_thuong_hieu" value="{{$thuonghieu->id_thuong_hieu}}"/>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_thuong_hieu" value="{{$thuonghieu['ten_thuong_hieu']}}" required/>
+                    <input type="input" class="form-control" name="ten_thuong_hieu" value="{{$thuonghieu->ten_thuong_hieu}}" required/>
                     <label class="form-label" >Tên thương hiệu</label>
                 </div>
 

@@ -14,15 +14,15 @@
             <form action="/admin/khuyenmai/sua" method="POST">
                 @csrf
                 <br>
-                <input type="hidden" class="form-control" name="id_khuyen_mai" value="{{$khuyenmai['id_khuyen_mai']}}"/>
+                <input type="hidden" class="form-control" name="id_khuyen_mai" value="{{$khuyenmai->id_khuyen_mai}}"/>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_khuyen_mai" value="{{$khuyenmai['ten_khuyen_mai']}}" required/>
+                    <input type="input" class="form-control" name="ten_khuyen_mai" value="{{$khuyenmai->ten_khuyen_mai}}" required/>
                     <label class="form-label" >Tên khuyến mãi</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="gia_tri_khuyen_mai" value="{{$khuyenmai['gia_tri_khuyen_mai']}}" required/>
+                    <input type="input" class="form-control" name="gia_tri_khuyen_mai" value="{{$khuyenmai->gia_tri_khuyen_mai}}" required/>
                     <label class="form-label" >Giá trị khuyến mãi</label>
                 </div>
 

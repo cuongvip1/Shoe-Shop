@@ -4,7 +4,7 @@
 	<!-- Sidebar - Brand -->
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
 		{{-- <img src="{{ URL('images1/icon-logo.png') }}" height="30"> --}}
-		<div class="sidebar-brand-text mx-3">PVB SHOP</div>
+		<div class="sidebar-brand-text mx-3">ABBEY SHOP</div>
 	</a>
 	
 
@@ -48,6 +48,13 @@
 		<a class="nav-link" href="/admin/giay">
 			<i class="fas fa-list"></i>
 			<span>Quản lý Giày</span>
+		</a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="/admin/donhang/processed">
+			<i class="fas fa-history"></i>
+			<span>Đơn hàng đã xử lý</span>
 		</a>
 	</li>
 

@@ -23,12 +23,12 @@
                 <tbody>
                     @foreach ($phanquyens as $phanquyen)
                     <tr>
-                        <th scope="row">{{$phanquyen['id_phan_quyen']}}</th>
-                        <td>{{$phanquyen['ten_phan_quyen']}}</td>
+                        <th scope="row">{{$phanquyen->id_phan_quyen}}</th>
+                        <td>{{$phanquyen->ten_phan_quyen}}</td>
                         <td>
                             <!-- <a href="" type="button" class="btn btn-success btn-rounded" target="_blank">Xem</a> -->
-                            <a href="/admin/phanquyen/sua/id={{$phanquyen['id_phan_quyen']}}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
-                            <a href="/admin/phanquyen/xoa/id={{$phanquyen['id_phan_quyen']}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
+                            <a href="/admin/phanquyen/sua/id={{$phanquyen->id_phan_quyen}}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
+                            <a href="/admin/phanquyen/xoa/id={{$phanquyen->id_phan_quyen}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
                                 class="btn btn-danger btn-rounded">Xóa</a>
                         </td>
                     </tr>

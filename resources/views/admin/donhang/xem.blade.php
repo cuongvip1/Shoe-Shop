@@ -23,15 +23,15 @@
                 </thead>
                 <tbody>
                     @php 
-                        $donhangs = unserialize($donhang['hoa_don']);
+                        $donhangs = unserialize($donhang->hoa_don);
                     @endphp
 
-                    @foreach ($donhangs as $donhang)
+                    @foreach ($donhangs as $it)
                     <tr>
-                        <td scope="row">{{$donhang['ten_giay']}} VNĐ</td>
-                        <td>{{number_format($donhang['don_gia'])}}</td>
-                        <td>{{$donhang['so_luong']}}</td>
-                        <td>{{number_format($donhang['don_gia'] * $donhang['so_luong'])}} VNĐ</td>
+                        <td scope="row">{{ data_get($it, 'ten_giay') }} VNĐ</td>
+                        <td>{{ number_format(data_get($it, 'don_gia')) }}</td>
+                        <td>{{ data_get($it, 'so_luong') }}</td>
+                        <td>{{ number_format(data_get($it, 'don_gia') * data_get($it, 'so_luong')) }} VNĐ</td>
                     </tr>
                     @endforeach
 
@@ -55,7 +55,30 @@
     </div>
     <div class="card-body">
 
-        <a href="/admin/donhang" type="button" class="btn btn-info">Duyệt đơn hàng này</a>
+        <div class="d-flex gap-2">
+            <a href="/admin/donhang" type="button" class="btn btn-info">Quay lại danh sách</a>
+            @php
+                $s = data_get($donhang, 'trang_thai');
+                $labels = [
+                    'cho' => 'Chờ',
+                    'da_xac_nhan' => 'Đã xác nhận',
+                    'tu_choi' => 'Từ chối',
+                    'da_huy' => 'Đã hủy',
+                ];
+            @endphp
+            @if($s == 'cho')
+                <form action="/admin/donhang/duyet/{{ $donhang->id_don_hang }}" method="POST" style="display:inline-block; margin-right:8px;">
+                    @csrf
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Bạn có chắc muốn duyệt đơn hàng này?')">Duyệt đơn hàng</button>
+                </form>
+                <form action="/admin/donhang/tu-choi/{{ $donhang->id_don_hang }}" method="POST" style="display:inline-block">
+                    @csrf
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn từ chối đơn hàng này?')">Từ chối đơn hàng</button>
+                </form>
+            @else
+                <span class="badge bg-secondary">Trạng thái: {{ $labels[$s] ?? $s }}</span>
+            @endif
+        </div>
 
     </div>
 </div>
