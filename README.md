@@ -1,8 +1,9 @@
 ## ABBEY SHOES SHOP (Website Laravel)
 
 ```bash
-# Link website: 
-https://ilyoushoesshop.000webhostapp.com/
+# Link:
+https://github.com/cuongvip1
+Database : ilyoushoesshop
 ```
 
 ### Install: (Run in Terminal)
