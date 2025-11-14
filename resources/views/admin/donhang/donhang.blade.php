@@ -26,18 +26,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($donhangs as $donhang)
+                    @foreach ($pendingOrders as $donhang)
                     <tr>
-                        <td scope="row">{{$donhang['id_don_hang']}}</td>
-                        <td>{{$donhang['ten_nguoi_nhan']}}</td>
-                        <td>{{$donhang['dia_chi_nhan']}}</td>
-                        <td>{{$donhang['sdt']}}</td>
-                        <td>{{$donhang['created_at']}}</td>
-                        <td>{{$donhang['ghi_chu']}}</td>
-                        <td>{{$donhang['tong_tien']}}</td>
+                        <td scope="row">{{$donhang->id_don_hang}}</td>
+                        <td>{{$donhang->ten_nguoi_nhan}}</td>
+                        <td>{{$donhang->dia_chi_nhan}}</td>
+                        <td>{{$donhang->sdt}}</td>
+                        <td>{{$donhang->created_at}}</td>
+                        <td>{{$donhang->ghi_chu}}</td>
+                        <td>{{$donhang->tong_tien}}</td>
                         <td>
-                            <a href="/admin/donhang/xem/id={{$donhang['id_don_hang']}}" type="button" class="btn btn-success btn-rounded">Xem chi tiết</a>
-                            <a href="/admin/donhang/xoa/id={{$donhang['id_don_hang']}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
+                            <a href="/admin/donhang/xem/id={{$donhang->id_don_hang}}" type="button" class="btn btn-success btn-rounded">Xem chi tiết</a>
+                            <a href="/admin/donhang/xoa/id={{$donhang->id_don_hang}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
                                 class="btn btn-danger btn-rounded">Xóa</a>
                         </td>
                     </tr>

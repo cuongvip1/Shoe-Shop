@@ -36,6 +36,8 @@ Route::get('/gioi-thieu', [MainController::class, 'aboutUs']);
 
 Route::get('/tai-khoan', [ThayDoiTaiKhoanController::class, 'index']);
 Route::post('/tai-khoan/sua', [ThayDoiTaiKhoanController::class, 'update']);
+Route::get('/tai-khoan/lich-su', [App\Http\Controllers\MainController::class, 'orderHistory']);
+Route::get('/tai-khoan/lich-su/xem/id={id}', [App\Http\Controllers\MainController::class, 'orderShow']);
 
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
@@ -100,7 +102,12 @@ Route::get('/admin/phanquyen/sua/id={id}', [PhanQuyenController::class, 'edit'])
 Route::post('/admin/phanquyen/sua', [PhanQuyenController::class, 'update']);
 
 // Hóa đơn
-Route::get('/admin/donhang/donhang', [DonHangController::class, 'show']);
+// Admin list: show pending orders for review and processed orders (filtered)
+Route::get('/admin/donhang/donhang', [DonHangController::class, 'indexAdmin']);
 Route::get('/admin/donhang/xoa/id={id}', [DonHangController::class, 'destroy']);
 Route::get('/admin/donhang/xem/id={id}', [DonHangController::class, 'show']);
+Route::get('/admin/donhang/processed', [DonHangController::class, 'processed']);
+Route::post('/admin/donhang/tu-choi/{id}', [DonHangController::class, 'tuCho']);
+Route::post('/admin/donhang/duyet/{id}', [DonHangController::class, 'duyet']);
+Route::post('/tai-khoan/lich-su/huy/{id}', [App\Http\Controllers\MainController::class, 'cancelOrder']);
 

@@ -36,11 +36,18 @@
                                     <form class="mx-1 mx-md-4" method="POST" action="{{ route('registerStore') }}">
                                         @csrf
 
+                                        @if(session('thatbai'))
+                                            <div class="alert alert-danger">{{ session('thatbai') }}</div>
+                                        @endif
+                                        @if(session('thanhcong'))
+                                            <div class="alert alert-success">{{ session('thanhcong') }}</div>
+                                        @endif
+
                                         <div class="d-flex flex-row align-items-center mt-4">
                                             <i class="fas fa-file-signature fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="text" id="ten_nguoi_dung" name="ten_nguoi_dung" required autofocus
-                                                    autocomplete="ten_nguoi_dung" class="form-control" />
+                                                    autocomplete="ten_nguoi_dung" class="form-control" value="{{ old('ten_nguoi_dung') }}" />
                                                 <label class="form-label">Tên người dùng</label>
                                             </div>
                                         </div>
@@ -57,7 +64,7 @@
                                             <i class="fas fa-phone fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
                                                 <input type="text" id="sdt" name="sdt" required
-                                                    autofocus autocomplete="sdt" class="form-control" />
+                                                    autofocus autocomplete="sdt" class="form-control" value="{{ old('sdt') }}" />
                                                 <label class="form-label" for="sdt">Số điện thoại</label>
                                             </div>
                                         </div>

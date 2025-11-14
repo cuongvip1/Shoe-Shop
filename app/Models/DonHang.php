@@ -15,6 +15,6 @@ class DonHang extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['ten_nguoi_nhan', 'sdt', 'hinh_thuc_thanh_toan', 'dia_chi_nhan', 'ghi_chu', 'tong_tien', 'hoa_don'];
+    protected $fillable = ['ten_nguoi_nhan', 'sdt', 'hinh_thuc_thanh_toan', 'dia_chi_nhan', 'ghi_chu', 'tong_tien', 'hoa_don', 'trang_thai'];
     // 'ten_giay', 'don_gia', 'so_luong', 'thanh_tien'
 }

@@ -13,13 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            GiaySeeder::class,
-            KhuyenMaiSeeder::class,
-            ThuongHieuSeeder::class,
-            LoaiGiaySeeder::class,
-            PhanQuyenSeeder::class,
-            TaiKhoanSeeder::class,
-        ]);
+        // Local seeding disabled.
+        // Data will be loaded from the API / external phpMyAdmin database instead.
+        // To re-enable local seeding, uncomment the following and run `php artisan db:seed`:
+        // $this->call([
+        //     GiaySeeder::class,
+        //     KhuyenMaiSeeder::class,
+        //     ThuongHieuSeeder::class,
+        //     LoaiGiaySeeder::class,
+        //     PhanQuyenSeeder::class,
+        //     TaiKhoanSeeder::class,
+        // ]);
     }
 }

@@ -10,6 +10,12 @@
     </div>
 
     <div class="card-body">
+        @if(session('thanhcong'))
+            <div class="alert alert-success">{{ session('thanhcong') }}</div>
+        @endif
+        @if(session('thatbai'))
+            <div class="alert alert-danger">{{ session('thatbai') }}</div>
+        @endif
         <div class="table-responsive">
             <!-- table-hover -->
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -27,16 +33,16 @@
                 <tbody>
                     @foreach ($users as $user)
                     <tr>
-                        <th scope="row">{{$user['id']}}</th>
-                        <td>{{$user['ten_nguoi_dung']}}</td>
-                        <td>{{$user['email']}}</td>
-                        <td>{{$user['sdt']}}</td>
-                        <td>{{$user['Ten_dang_nhap']}}</td>
-                        <td>{{$user['id_phan_quyen']}}</td>
+                        <th scope="row">{{ data_get($user, 'id') ?? data_get($user, 'id_user') }}</th>
+                        <td>{{ data_get($user, 'ten_nguoi_dung') }}</td>
+                        <td>{{ data_get($user, 'email') }}</td>
+                        <td>{{ data_get($user, 'sdt') }}</td>
+                        <td>{{ data_get($user, 'Ten_dang_nhap') ?? data_get($user, 'ten_dang_nhap') }}</td>
+                        <td>{{ data_get($user, 'id_phan_quyen') ?? data_get($user, 'phan_quyen_id') }}</td>
                         <td>
                             <!-- <a href="" type="button" class="btn btn-success btn-rounded" target="_blank">Xem</a> -->
-                            <a href="/admin/taikhoan/sua/id={{$user['id']}}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
-                            <a href="/admin/taikhoan/xoa/id={{$user['id']}}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
+                            <a href="/admin/taikhoan/sua/id={{ data_get($user, 'id') ?? data_get($user, 'id_user') }}" type="button" class="btn btn-warning btn-rounded">Sửa</a>
+                            <a href="/admin/taikhoan/xoa/id={{ data_get($user, 'id') ?? data_get($user, 'id_user') }}" onclick="return confirm('Bạn có thật sự muốn xóa ?');" type="button"
                                 class="btn btn-danger btn-rounded">Xóa</a>
                         </td>
                     </tr>

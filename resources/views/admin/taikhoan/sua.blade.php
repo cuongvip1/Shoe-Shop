@@ -14,30 +14,30 @@
             <form action="/admin/taikhoan/sua" method="POST">
                 @csrf
                 <br>
-                <input type="hidden" class="form-control" name="id" value="{{$data['id']}}"/>
+                <input type="hidden" class="form-control" name="id" value="{{$data->id}}"/>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_nguoi_dung" value="{{$data['ten_nguoi_dung']}}" required/>
+                    <input type="input" class="form-control" name="ten_nguoi_dung" value="{{$data->ten_nguoi_dung}}" required/>
                     <label class="form-label" >Tên người dùng</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="email" class="form-control" name="email" value="{{$data['email']}}" required/>
+                    <input type="email" class="form-control" name="email" value="{{$data->email}}" required/>
                     <label class="form-label" >Email</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="sdt" value="{{$data['sdt']}}" required/>
+                    <input type="input" class="form-control" name="sdt" value="{{$data->sdt}}" required/>
                     <label class="form-label" >Số điện thoại</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="Ten_dang_nhap" value="{{$data['Ten_dang_nhap']}}" required/>
+                    <input type="input" class="form-control" name="Ten_dang_nhap" value="{{$data->Ten_dang_nhap}}" required/>
                     <label class="form-label" >Tên đăng nhập</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="password" class="form-control" name="password" value="{{$data['password']}}" required/>
+                    <input type="password" class="form-control" name="password" value="{{$data->password}}" required/>
                     <label class="form-label" >Mật khẩu</label>
                 </div>
 

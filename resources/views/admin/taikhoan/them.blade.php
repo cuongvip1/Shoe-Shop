@@ -10,32 +10,38 @@
     </div>
 
     <div class="card-body">
+        @if(session('thatbai'))
+            <div class="alert alert-danger">{{ session('thatbai') }}</div>
+        @endif
+        @if(session('thanhcong'))
+            <div class="alert alert-success">{{ session('thanhcong') }}</div>
+        @endif
         <div class="table-responsive">
             <form action="/admin/taikhoan/them" method="POST">
                 @csrf
                 <br>
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="ten_nguoi_dung" required/>
+                    <input type="input" class="form-control" name="ten_nguoi_dung" required value="{{ old('ten_nguoi_dung') }}" />
                     <label class="form-label" >Tên người dùng</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="email" class="form-control" name="email" required/>
+                    <input type="email" class="form-control" name="email" required value="{{ old('email') }}" />
                     <label class="form-label" >Email</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="sdt" required/>
+                    <input type="input" class="form-control" name="sdt" required value="{{ old('sdt') }}" />
                     <label class="form-label" >Số điện thoại</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="input" class="form-control" name="Ten_dang_nhap" required/>
+                    <input type="input" class="form-control" name="Ten_dang_nhap" required value="{{ old('Ten_dang_nhap') }}" />
                     <label class="form-label" >Tên đăng nhập</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="password" class="form-control" name="password" required/>
+                    <input type="password" class="form-control" name="password" required />
                     <label class="form-label" >Mật khẩu</label>
                 </div>
 

@@ -44,10 +44,10 @@
                                 aria-labelledby="flush-headingOne" data-mdb-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <ul class="list-group list-group-flush">
-                                        @foreach($loaigiays as $loaigiay)
+                                        @foreach(($loaigiays ?? []) as $loaigiay)
                                         <li class="list-group-item">
-                                            <a href="/cua-hang/loaigiay={{$loaigiay['ten_loai_giay']}}"
-                                                class="text-dark">{{$loaigiay['ten_loai_giay']}}</a>
+                                            <a href="/cua-hang/loaigiay={{$loaigiay->ten_loai_giay}}"
+                                                class="text-dark">{{$loaigiay->ten_loai_giay}}</a>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -67,10 +67,10 @@
                                 aria-labelledby="flush-headingTwo" data-mdb-parent="#accordionFlushExample">
                                 <div class="accordion-body">
                                     <ul class="list-group list-group-flush">
-                                        @foreach($thuonghieus as $thuonghieu)
+                                        @foreach(($thuonghieus ?? []) as $thuonghieu)
                                         <li class="list-group-item">
-                                            <a href="/cua-hang/thuonghieu={{$thuonghieu['ten_thuong_hieu']}}"
-                                                class="text-dark">{{$thuonghieu['ten_thuong_hieu']}}</a>
+                                            <a href="/cua-hang/thuonghieu={{$thuonghieu->ten_thuong_hieu}}"
+                                                class="text-dark">{{$thuonghieu->ten_thuong_hieu}}</a>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -135,7 +135,7 @@
         <div class="col-xl-9">
             <div class="row">
 
-                @foreach($giays as $giay)
+                @foreach(($giays ?? []) as $giay)
 
                 @if($timloaigiay != '')
                 @if($giay->ten_loai_giay == $timloaigiay)
@@ -151,10 +151,10 @@
                                     <h4 class="card-title">{{$giay->ten_giay}}</h4>
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
-                                        @foreach($khuyenmais as $khuyenmai)
-                                        @if($khuyenmai['ten_khuyen_mai'] == $giay->ten_khuyen_mai)
+                                        @foreach(($khuyenmais ?? []) as $khuyenmai)
+                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
-                                        $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                        $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
                                         @endforeach
 
@@ -185,9 +185,9 @@
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
                                         @foreach($khuyenmais as $khuyenmai)
-                                        @if($khuyenmai['ten_khuyen_mai'] == $giay->ten_khuyen_mai)
+                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
-                                        $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                        $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
                                         @endforeach
 
@@ -217,9 +217,9 @@
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
                                         @foreach($khuyenmais as $khuyenmai)
-                                        @if($khuyenmai['ten_khuyen_mai'] == $giay->ten_khuyen_mai)
+                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
-                                        $khuyenmai['gia_tri_khuyen_mai']))@endif
+                                        $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
                                         @endforeach
 
@@ -240,7 +240,11 @@
 
             <br>
             <div class="pagination pagination-circle justify-content-end">
-                <center>{{$giays->links()}}</center>
+                <center>
+                    @if(is_object($giays) && method_exists($giays, 'links'))
+                        {{$giays->links()}}
+                    @endif
+                </center>
             </div>
 
         </div>

@@ -36,11 +36,21 @@
             <tbody>
                 @foreach($giohangs as $id=>$giohang)
                 <tr>
+                    @php
+                        // Ensure $maxQty is available for this row (product stock)
+                        $giayObj = isset($giays) ? ($giays->firstWhere('id_giay', $id) ?? null) : null;
+                        $maxQty = $giayObj ? intval($giayObj->so_luong) : 0;
+                        $qtyMessage = $maxQty > 0 ? 'Sản phẩm trong kho còn lại: '.$maxQty : 'Sản phẩm đã hết hàng';
+                    @endphp
                     <th>
                         <form id="thanh-toan" action="/thanh-toan" method="POST">
                             @csrf 
                             <div class="form-check info">
-                                <input class="form-check-input" type="checkbox" value="{{$id}}" name="check-gio-hang[]" form="thanh-toan" checked/>
+                                @if(isset($giays) && ($giays->firstWhere('id_giay', $id)->so_luong ?? 0) > 0)
+                                    <input class="form-check-input" type="checkbox" value="{{$id}}" name="check-gio-hang[]" form="thanh-toan" checked/>
+                                @else
+                                    <input class="form-check-input" type="checkbox" value="{{$id}}" disabled />
+                                @endif
                             </div>
                         </form>
                     </th>
@@ -59,23 +69,32 @@
                         <td>
                             <div class="d-flex">
                                 <div class="btn btn-info px-3 mr-1"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="margin-right:2px">
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="margin-right:2px"
+                                    @if($maxQty == 0) disabled @endif>
                                     <i class="fas fa-minus"></i>
                                 </div>
 
                                 <div class="form-outline" style="width:80px">
-                                    <input id="form1" min="1" name="so_luong" value="{{$giohang['so_luong']}}"
-                                        type="number" autocomplete="off" class="form-control" />
+                                    @php
+                                        $giayObj = $giays->firstWhere('id_giay', $id) ?? null;
+                                        $maxQty = $giayObj ? intval($giayObj->so_luong) : 1;
+                                    @endphp
+                                    <input id="form1" min="1" max="{{ $maxQty }}" name="so_luong" value="{{ min($giohang['so_luong'], $maxQty) }}"
+                                        type="number" autocomplete="off" class="form-control"
+                                        oninput="this.setCustomValidity('')" data-max-msg="{{ $qtyMessage }}"
+                                        oninvalid="this.setCustomValidity(this.dataset.maxMsg)" />
                                     <label class="form-label" for="form1">Số lượng</label>
                                 </div>&nbsp;
 
                                 <div class="btn btn-info px-3 mr-1"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                    @if($maxQty == 0) disabled @endif>
                                     <i class="fas fa-plus"></i>
                                 </div>
                             </div>
-                        </td>
-                        <td><b>{{number_format($km = sprintf('%d', ($giohang['so_luong'] * $giohang['don_gia']) - ($giohang['so_luong'] * $giohang['don_gia'] * $giohang['khuyen_mai'] * 0.01)))}} VNĐ<b>
+                            <td>
+                            @php $effectiveQty = min($giohang['so_luong'], $maxQty); @endphp
+                            <td><b>{{number_format($km = sprintf('%d', ($effectiveQty * $giohang['don_gia']) - ($effectiveQty * $giohang['don_gia'] * $giohang['khuyen_mai'] * 0.01)))}} VNĐ<b>
                         </td>
                         <td>
                             <button type="submit" class="btn btn-info">Cập nhật</button>

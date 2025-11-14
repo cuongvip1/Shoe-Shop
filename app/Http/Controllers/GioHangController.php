@@ -56,15 +56,22 @@ class GioHangController extends Controller
 
         $khuyenmais = KhuyenMai::all();
 
+        $available = intval($giay['so_luong']);
+        if ($available <= 0) {
+            session()->flash('thatbai', 'Sản phẩm "'.$giay['ten_giay'].'" hiện đã hết hàng.');
+            return Redirect('/cua-hang/san-pham='.$id);
+        }
         if(isset($gio_hang[$id])){
-            $gio_hang[$id]['so_luong'] += 1;
+            $newQty = intval($gio_hang[$id]['so_luong']) + 1;
+            // cap to available stock
+            $gio_hang[$id]['so_luong'] = $newQty > $available ? $available : $newQty;
         } else {
 
             $gio_hang[$id] = [
                 'hinh_anh_1' => $giay['hinh_anh_1'],
                 'ten_giay' => $giay['ten_giay'],
                 'don_gia' => $giay['don_gia'],
-                'so_luong' => '1',
+                'so_luong' => $available > 0 ? 1 : 0,
             ];
 
             foreach($khuyenmais as $khuyenmai){
@@ -138,9 +145,14 @@ class GioHangController extends Controller
         $giay = Giay::find($request->id);
         $gio_hang = session()->get(key:'gio_hang');
 
-        
-        $gio_hang[$request->id]['so_luong'] =  $request->so_luong;
-        
+        $available = $giay ? intval($giay->so_luong) : 0;
+        $newQty = intval($request->so_luong);
+        if ($newQty > $available) {
+            $newQty = $available;
+        }
+
+        $gio_hang[$request->id]['so_luong'] =  $newQty;
+
         session()->put('gio_hang', $gio_hang);
         // return session()->get(key:'gio_hang');
         return Redirect('/gio-hang');
