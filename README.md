@@ -1,8 +1,9 @@
 ## ABBEY SHOES SHOP (Website Laravel)
 
 ```bash
-# Link:
-https://github.com/cuongvip1
+# Link API :
+https://github.com/cuongvip1](https://github.com/cuongvip1/ShoeShop-Api
+# Mysql
 Database : ilyoushoesshop
 ```
 
@@ -19,6 +20,9 @@ npm run dev
 # create database: pvbshoesshop   # utf8_unicode_ci
 php artisan migrate:fresh --seed
 php artisan key:generate
+#Web 
+php artisan serve --port=8001
+#Api
 php artisan serve
 ```
 
