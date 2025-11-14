@@ -2,7 +2,7 @@
 
 ```bash
 # Link API :
-https://github.com/cuongvip1](https://github.com/cuongvip1/ShoeShop-Api
+https://github.com/cuongvip1/ShoeShop-Api
 # Mysql
 Database : ilyoushoesshop
 ```
