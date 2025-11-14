@@ -17,7 +17,7 @@ composer install
 npm install
 npm audit fix
 npm run dev
-# create database: pvbshoesshop   # utf8_unicode_ci
+# create database: 
 php artisan migrate:fresh --seed
 php artisan key:generate
 #Web 
