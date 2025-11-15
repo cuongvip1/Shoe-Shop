@@ -25,12 +25,19 @@
 
             <div class="col-xl-9">
                 <div class="card-body">
-                    <h5 class="card-title">TP SHOP - WEBSITE BÁN GIÀY</h5>
+                    <h5 class="card-title">ABBEY SHOP - WEBSITE BÁN GIÀY</h5>
                     <br>
                     <div class="card-text">
-                        <p>Chúng tôi cũng đã và đang là những người tiêu dùng nên chúng tôi hiểu rất rõ tầm quan trọng của một đôi giày. Đó có thể là một đôi giày thể thao chạy bộ, đi chơi hay giày đá banh nhưng tựu chung lại thứ chúng ta cần vẫn là sự thoải mái và tự tin khi mang đôi giày vào. Với một đôi chân khỏe, một đôi giày tốt bạn có thể bước qua những chướng ngại, có thể thoải mái thể hiện mình, thoải mái vận động với những dòng thể thao hay thoải mái chưng diện với những dòng Sneaker kinh điển. </p>
-                        <p>Từ niềm cảm hứng bất tận với giày, đội ngũ chúng tôi đã cho ra đời đứa con tinh thần “TP SHOP". Với mong muốn mang đến cho khách hàng những đôi giày "chất nhất" đến từ các thương hiệu hàng đầu thế giới như Nike, Adidas, Puma, Reebok, Fila, Converse, New Balance, Asics,… với mức giá vô cùng hợp lý. Từ giày bóng đá, tennis, cầu lông cho đến giày sneaker, running, training,…</p>
-
+                        <p>Chúng tôi hiểu rằng một đôi giày không chỉ đơn thuần là phụ kiện thời trang, mà còn là người bạn đồng hành trong mọi hành trình của bạn. Dù là đôi giày thể thao chạy bộ, đi học, đi chơi hay giày đá bóng, điều mà mỗi người tìm kiếm vẫn luôn là sự thoải mái, bền bỉ và tự tin khi mang trên chân.</p>
+                        <p>Từ niềm đam mê bất tận với giày và mong muốn mang đến trải nghiệm tốt nhất cho khách hàng, ABBEY SHOP được thành lập như một địa chỉ đáng tin cậy dành cho những ai yêu thích những đôi giày "chất" đến từ các thương hiệu hàng đầu thế giới như Nike, Adidas, Converse, Puma, Vans, New Balance, Balenciaga,…</p>
+                        <p>Chúng tôi cung cấp đa dạng các dòng sản phẩm, từ giày sneaker, giày chạy bộ, giày đá bóng, giày training cho đến các mẫu thời trang cao cấp. Mỗi sản phẩm đều được tuyển chọn kỹ lưỡng, đảm bảo:</p>
+                        <div style=" padding: 0 0 0 50px ">
+                            <p>✔️ Chất lượng tốt</p>
+                            <p>✔️ Giá cả hợp lý</p>
+                            <p>✔️ Nguồn gốc rõ ràng</p>
+                        </div>
+                        <p>Sứ mệnh của ABBEY SHOP là giúp bạn tìm được đôi giày hoàn hảo, mang lại sự tự tin trên từng bước chân – dù bạn đang ở sân bóng, phòng gym hay là những bước đi hằng ngày.</p>
+                    
                     </div>
                     <p class="card-text">
                         <i><small class="text-success">Đăng ký tài khoản và bắt đầu mua sắm đôi giày mơ ước của bạn!</small></i>
