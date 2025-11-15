@@ -60,12 +60,11 @@
                     loading="lazy"></a>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <form action="/tim-kiem" method="POST"
+                <form action="/tim-kiem" method="GET"
                     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    @csrf
                     <div class="input-group" style="width:170px;">
                         <input type="text" class="form-control bg-light border-0 small" name="tim_kiem"
-                            placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
+                            value="{{ request('tim_kiem', '') }}" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search fa-sm"></i>
@@ -76,11 +75,10 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown no-arrow d-sm-none">
-                        <form action="/tim-kiem" method="POST" class="form-inline mr-auto w-100 navbar-search">
-                            @csrf
+                        <form action="/tim-kiem" method="GET" class="form-inline mr-auto w-100 navbar-search">
                             <div class="input-group" style="width:170px; margin-top:7px">
                                 <input type="text" class="form-control bg-light border-0 small" name="tim_kiem"
-                                    placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
+                                    value="{{ request('tim_kiem', '') }}" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search fa-sm"></i>
@@ -256,7 +254,7 @@
         <section class=" justify-content-center justify-content-lg-between p-4 border-top"
             style="background-color: #757575;">
             <div class="text-center me-5 d-none d-lg-block">
-                <span class="text-center text-white">© 2024 Bản quyền thuộc về:
+                <span class="text-center text-white">© 2025 Bản quyền thuộc về:
                     <a class="text-white" href="/">&ensp;ABBEY SHOP - Trần Chí Cương</a>
                 </span>
             </div>

@@ -24,7 +24,7 @@ Route::get('/cua-hang/loaigiay={loaigiay}', [MainController::class, 'timloaigiay
 Route::get('/cua-hang/thuonghieu={thuonghieu}', [MainController::class, 'timthuonghieu']);
 Route::get('/cua-hang/gia={gia1}-{gia2}', [MainController::class, 'timgia']);
 Route::get('/cua-hang/san-pham={slug}', [MainController::class, 'sanpham']);
-Route::post('/tim-kiem', [MainController::class, 'timkiem']);
+Route::match(['get','post'],'/tim-kiem', [MainController::class, 'timkiem']);
 
 Route::post('/cua-hang/san-pham={id}/danh-gia', [DanhGiaController::class, 'store']);
 

@@ -31,7 +31,15 @@ class MainController extends Controller
         }
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
-        $giays = $api->get('/api/giay');
+        // Forward current request query (page, per_page, tim_kiem...) to the API
+        // If the incoming request includes a search term, request a larger page
+        // size from the API so we can filter across all matching items instead
+        // of only the API's current page.
+        $queryParams = request()->query();
+        if (!empty($queryParams['tim_kiem'])) {
+            $queryParams['per_page'] = 200;
+        }
+        $giays = $api->get('/api/giay', $queryParams);
         $users = $api->get('/api/users');
         $phanquyens = $api->get('/api/phan-quyen');
         $khuyenmais = $api->get('/api/khuyen-mai');
@@ -142,14 +150,51 @@ class MainController extends Controller
         }
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
-        $giays = $api->get('/api/giay');
+        $giays = $api->get('/api/giay', request()->query());
         $users = $api->get('/api/users');
         $phanquyens = $api->get('/api/phan-quyen');
         $khuyenmais = $api->get('/api/khuyen-mai');
 
+        // normalize auxiliary lists so views can iterate safely
+        $users = $this->normalizeData($users);
+        $phanquyens = $this->normalizeData($phanquyens);
+        $khuyenmais = $this->normalizeData($khuyenmais);
+
         $giays = $this->normalizeData($giays);
         $thuonghieus = $this->normalizeData($thuonghieus);
         $loaigiays = $this->normalizeData($loaigiays);
+
+        // If a search term is provided, ensure we filter by product name (ten_giay).
+        $search = trim(strval(request()->query('tim_kiem', '')));
+
+        // Extract items from paginator or array
+        $items = [];
+        $perPage = 12;
+        $currentPage = max(1, intval(request()->query('page', 1)));
+        if (is_object($giays) && method_exists($giays, 'items')) {
+            $items = $giays->items();
+            try { if (method_exists($giays, 'perPage')) $perPage = $giays->perPage(); } catch(\Exception $e) {}
+        } elseif (is_array($giays)) {
+            $items = $giays;
+        } elseif (is_object($giays)) {
+            $items = [$giays];
+        }
+
+        if ($search !== '') {
+            $needle = $search;
+                $filtered = array_values(array_filter((array)$items, function($it) use ($needle) {
+                    $name = strval(data_get($it, 'ten_giay', ''));
+                    $nameNorm = $this->normalizeSearchString($name);
+                    $needleNorm = $this->normalizeSearchString($needle);
+                    return mb_stripos($nameNorm, $needleNorm, 0, 'UTF-8') !== false;
+                }));
+        } else {
+            $filtered = is_array($items) ? $items : (array)$items;
+        }
+
+        $total = count($filtered);
+        $path = Paginator::resolveCurrentPath();
+        $giays = new LengthAwarePaginator($filtered, $total, $perPage, $currentPage, ['path' => $path, 'query' => request()->query()]);
 
         return view('index')->with('route', 'cua-hang')
         ->with('data', $data)
@@ -159,7 +204,7 @@ class MainController extends Controller
         ->with('users', $users)
         ->with('phanquyens', $phanquyens)
         ->with('khuyenmais', $khuyenmais)
-        ->with('timloaigiay', '')->with('timthuonghieu', '')
+        ->with('timloaigiay', '')->with('timthuonghieu', '')->with('tim_kiem', $search)
         ;
     }
 
@@ -171,7 +216,7 @@ class MainController extends Controller
         }
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
-        $giays = $api->get('/api/giay');
+        $giays = $api->get('/api/giay', request()->query());
         $users = $api->get('/api/users');
         $phanquyens = $api->get('/api/phan-quyen');
         $khuyenmais = $api->get('/api/khuyen-mai');
@@ -339,7 +384,15 @@ class MainController extends Controller
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
         // basic search via API (pass query param `tim_kiem` to /api/giay)
-        $giays = $api->get('/api/giay', ['tim_kiem' => $request->tim_kiem]);
+        // Forward the full query string to the API so pagination (page) and search (tim_kiem) work.
+        // If a search term exists, ask the API for a larger page so we can filter
+        // across all matching items locally (avoids missing items when API
+        // returns a small paginated page).
+        $queryParams = request()->query();
+        if (!empty($queryParams['tim_kiem'])) {
+            $queryParams['per_page'] = 200;
+        }
+        $giays = $api->get('/api/giay', $queryParams);
 
         $users = $api->get('/api/users');
         $phanquyens = $api->get('/api/phan-quyen');
@@ -349,6 +402,37 @@ class MainController extends Controller
         $thuonghieus = $this->normalizeData($thuonghieus);
         $loaigiays = $this->normalizeData($loaigiays);
 
+        // If a search term is provided, ensure we filter by product name (ten_giay).
+        $search = trim(strval(request()->query('tim_kiem', '')));
+
+        // Extract items from paginator or array
+        $items = [];
+        $perPage = 12;
+        $currentPage = max(1, intval(request()->query('page', 1)));
+        if (is_object($giays) && method_exists($giays, 'items')) {
+            $items = $giays->items();
+            try { if (method_exists($giays, 'perPage')) $perPage = $giays->perPage(); } catch(\Exception $e) {}
+        } elseif (is_array($giays)) {
+            $items = $giays;
+        } elseif (is_object($giays)) {
+            $items = [$giays];
+        }
+
+        if ($search !== '') {
+            $needle = $this->normalizeSearchString($search);
+            $filtered = array_values(array_filter((array)$items, function($it) use ($needle) {
+                $name = strval(data_get($it, 'ten_giay', ''));
+                $nameNorm = $this->normalizeSearchString($name);
+                return mb_stripos($nameNorm, $needle, 0, 'UTF-8') !== false;
+            }));
+        } else {
+            $filtered = is_array($items) ? $items : (array)$items;
+        }
+
+        $total = count($filtered);
+        $path = Paginator::resolveCurrentPath();
+        $giays = new LengthAwarePaginator($filtered, $total, $perPage, $currentPage, ['path' => $path, 'query' => request()->query()]);
+
         return view('index')->with('route', 'cua-hang')
         ->with('data', $data)
         ->with('thuonghieus', $thuonghieus)
@@ -357,7 +441,7 @@ class MainController extends Controller
         ->with('users', $users)
         ->with('phanquyens', $phanquyens)
         ->with('khuyenmais', $khuyenmais)
-        ->with('timloaigiay', '')->with('timthuonghieu', '')
+        ->with('timloaigiay', '')->with('timthuonghieu', '')->with('tim_kiem', $search)
         ;
     }
 
@@ -428,6 +512,10 @@ class MainController extends Controller
         $gio_hangs = session()->get(key:'gio_hang');
         if(!$gio_hangs){$gio_hangs = array();}
 
+        // normalize auxiliary lists
+        $users = $this->normalizeData($users);
+        $phanquyens = $this->normalizeData($phanquyens);
+        $khuyenmais = $this->normalizeData($khuyenmais);
 
         return view('index')->with('route', 'san-pham')
         ->with('data', $data)
@@ -459,11 +547,14 @@ class MainController extends Controller
         $phanquyens = $api->get('/api/phan-quyen');
         $khuyenmais = $api->get('/api/khuyen-mai');
 
-        $giays = $api->get('/api/giay', ['ten_loai_giay' => $loaigiay]);
+        $giays = $api->get('/api/giay', array_merge(request()->query(), ['ten_loai_giay' => $loaigiay]));
 
         $giays = $this->normalizeData($giays);
         $thuonghieus = $this->normalizeData($thuonghieus);
         $loaigiays = $this->normalizeData($loaigiays);
+        $users = $this->normalizeData($users);
+        $phanquyens = $this->normalizeData($phanquyens);
+        $khuyenmais = $this->normalizeData($khuyenmais);
 
         return view('index')->with('route', 'cua-hang')
         ->with('data', $data)
@@ -487,7 +578,7 @@ class MainController extends Controller
         }
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
-        $giays = $api->get('/api/giay', ['ten_thuong_hieu' => $thuonghieu]);
+        $giays = $api->get('/api/giay', array_merge(request()->query(), ['ten_thuong_hieu' => $thuonghieu]));
         $users = $api->get('/api/users');
         $phanquyens = $api->get('/api/phan-quyen');
         $khuyenmais = $api->get('/api/khuyen-mai');
@@ -495,6 +586,9 @@ class MainController extends Controller
         $giays = $this->normalizeData($giays);
         $thuonghieus = $this->normalizeData($thuonghieus);
         $loaigiays = $this->normalizeData($loaigiays);
+        $users = $this->normalizeData($users);
+        $phanquyens = $this->normalizeData($phanquyens);
+        $khuyenmais = $this->normalizeData($khuyenmais);
 
         return view('index')->with('route', 'cua-hang')
         ->with('data', $data)
@@ -518,7 +612,7 @@ class MainController extends Controller
         $thuonghieus = $api->get('/api/thuong-hieu');
         $loaigiays = $api->get('/api/loai-giay');
 
-        $giays = $api->get('/api/giay', ['gia_min' => $gia1, 'gia_max' => $gia2]);
+        $giays = $api->get('/api/giay', array_merge(request()->query(), ['gia_min' => $gia1, 'gia_max' => $gia2]));
 
         $users = $api->get('/api/users');
 
@@ -635,6 +729,37 @@ class MainController extends Controller
         }
 
         return $normalized;
+    }
+
+    /**
+     * Normalize a string for search: remove Vietnamese diacritics, collapse whitespace, lower-case.
+     */
+    private function normalizeSearchString($str)
+    {
+        if (is_null($str)) return '';
+        $s = mb_strtolower((string)$str, 'UTF-8');
+        $map = [
+            'à'=>'a','á'=>'a','ả'=>'a','ã'=>'a','ạ'=>'a',
+            'ă'=>'a','ắ'=>'a','ằ'=>'a','ẳ'=>'a','ẵ'=>'a','ặ'=>'a',
+            'â'=>'a','ấ'=>'a','ầ'=>'a','ẩ'=>'a','ẫ'=>'a','ậ'=>'a',
+            'đ'=>'d',
+            'è'=>'e','é'=>'e','ẻ'=>'e','ẽ'=>'e','ẹ'=>'e',
+            'ê'=>'e','ế'=>'e','ề'=>'e','ể'=>'e','ễ'=>'e','ệ'=>'e',
+            'ì'=>'i','í'=>'i','ỉ'=>'i','ĩ'=>'i','ị'=>'i',
+            'ò'=>'o','ó'=>'o','ỏ'=>'o','õ'=>'o','ọ'=>'o',
+            'ô'=>'o','ố'=>'o','ồ'=>'o','ổ'=>'o','ỗ'=>'o','ộ'=>'o',
+            'ơ'=>'o','ớ'=>'o','ờ'=>'o','ở'=>'o','ỡ'=>'o','ợ'=>'o',
+            'ù'=>'u','ú'=>'u','ủ'=>'u','ũ'=>'u','ụ'=>'u',
+            'ư'=>'u','ứ'=>'u','ừ'=>'u','ử'=>'u','ữ'=>'u','ự'=>'u',
+            'ỳ'=>'y','ý'=>'y','ỷ'=>'y','ỹ'=>'y','ỵ'=>'y'
+        ];
+
+        $s = strtr($s, $map);
+        // remove any remaining combining diacritics
+        $s = preg_replace('/\p{M}/u', '', $s);
+        // collapse whitespace
+        $s = preg_replace('/\s+/u', ' ', $s);
+        return trim($s);
     }
 
     public function aboutUs(){
