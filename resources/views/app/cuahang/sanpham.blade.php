@@ -86,7 +86,7 @@
                             <h4 class="card-text text-success">
                                 @if ($km = 0)@endif
                                 @foreach (($khuyenmais ?? []) as $khuyenmai)
-                                    @if ($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
+                                    @if (data_get($khuyenmai,'ten_khuyen_mai') == data_get($giay,'ten_khuyen_mai'))
                                         @php $km = sprintf('%d', $giay->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai) @endphp
                                         @if ($gtkm = $khuyenmai->gia_tri_khuyen_mai)@endif
                                     @endif
@@ -314,7 +314,7 @@
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
                                                         @foreach (($khuyenmais ?? []) as $khuyenmai)
-                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                            @if (data_get($khuyenmai,'ten_khuyen_mai') == data_get($giaytuongtu,'ten_khuyen_mai'))
                                                                 @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach
@@ -355,7 +355,7 @@
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
                                                         @foreach (($khuyenmais ?? []) as $khuyenmai)
-                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                            @if (data_get($khuyenmai,'ten_khuyen_mai') == data_get($giaytuongtu,'ten_khuyen_mai'))
                                                                 @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach
@@ -397,7 +397,7 @@
                                                     <p class="card-text text-success">
                                                         @if ($km = 0)@endif
                                                         @foreach (($khuyenmais ?? []) as $khuyenmai)
-                                                            @if ($khuyenmai->ten_khuyen_mai == $giaytuongtu->ten_khuyen_mai)
+                                                            @if (data_get($khuyenmai,'ten_khuyen_mai') == data_get($giaytuongtu,'ten_khuyen_mai'))
                                                                 @if ($km = sprintf('%d', $giaytuongtu->don_gia * 0.01 * $khuyenmai->gia_tri_khuyen_mai))@endif
                                                             @endif
                                                         @endforeach

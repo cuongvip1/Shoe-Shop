@@ -152,7 +152,7 @@
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
                                         @foreach(($khuyenmais ?? []) as $khuyenmai)
-                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
+                                        @if(data_get($khuyenmai,'ten_khuyen_mai') == data_get($giay,'ten_khuyen_mai'))
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
                                         $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
@@ -185,7 +185,7 @@
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
                                         @foreach($khuyenmais as $khuyenmai)
-                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
+                                        @if(data_get($khuyenmai,'ten_khuyen_mai') == data_get($giay,'ten_khuyen_mai'))
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
                                         $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
@@ -217,7 +217,7 @@
                                     <p class="card-text text-success">
                                         @if($km = 0)@endif
                                         @foreach($khuyenmais as $khuyenmai)
-                                        @if($khuyenmai->ten_khuyen_mai == $giay->ten_khuyen_mai)
+                                        @if(data_get($khuyenmai,'ten_khuyen_mai') == data_get($giay,'ten_khuyen_mai'))
                                         @if($km = sprintf('%d', $giay->don_gia * 0.01 *
                                         $khuyenmai->gia_tri_khuyen_mai))@endif
                                         @endif
@@ -242,7 +242,7 @@
             <div class="pagination pagination-circle justify-content-end">
                 <center>
                     @if(is_object($giays) && method_exists($giays, 'links'))
-                        {{$giays->links()}}
+                        {{$giays->appends(request()->except('page'))->links()}}
                     @endif
                 </center>
             </div>
