@@ -72,6 +72,7 @@ class GioHangController extends Controller
                 'ten_giay' => $giay['ten_giay'],
                 'don_gia' => $giay['don_gia'],
                 'so_luong' => $available > 0 ? 1 : 0,
+                'size' => null,
             ];
 
             foreach($khuyenmais as $khuyenmai){
@@ -152,6 +153,11 @@ class GioHangController extends Controller
         }
 
         $gio_hang[$request->id]['so_luong'] =  $newQty;
+        
+        // Cập nhật size nếu có
+        if ($request->has('size') && $request->input('size')) {
+            $gio_hang[$request->id]['size'] = $request->input('size');
+        }
 
         session()->put('gio_hang', $gio_hang);
         // return session()->get(key:'gio_hang');

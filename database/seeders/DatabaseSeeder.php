@@ -24,5 +24,20 @@ class DatabaseSeeder extends Seeder
         //     PhanQuyenSeeder::class,
         //     TaiKhoanSeeder::class,
         // ]);
+   
+        $this->call(DanhGiaTableSeeder::class);
+        $this->call(DonHangTableSeeder::class);
+        $this->call(FailedJobsTableSeeder::class);
+        $this->call(GiayTableSeeder::class);
+        $this->call(KhuyenMaiTableSeeder::class);
+        $this->call(LoaiGiayTableSeeder::class);
+        $this->call(MigrationsTableSeeder::class);
+        $this->call(PasswordResetsTableSeeder::class);
+        $this->call(PersonalAccessTokensTableSeeder::class);
+        $this->call(PhanQuyenTableSeeder::class);
+        $this->call(SessionsTableSeeder::class);
+        $this->call(SizeTableSeeder::class);
+        $this->call(ThuongHieuTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
     }
 }

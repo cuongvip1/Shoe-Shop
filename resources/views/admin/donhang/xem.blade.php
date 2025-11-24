@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Tên giày</th>
+                        <th scope="col">Size</th>
                         <th scope="col">Đơn giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
@@ -28,8 +29,9 @@
 
                     @foreach ($donhangs as $it)
                     <tr>
-                        <td scope="row">{{ data_get($it, 'ten_giay') }} VNĐ</td>
-                        <td>{{ number_format(data_get($it, 'don_gia')) }}</td>
+                        <td scope="row">{{ data_get($it, 'ten_giay') }}</td>
+                        <td>{{ data_get($it, 'size', 'Chưa chọn') }}</td>
+                        <td>{{ number_format(data_get($it, 'don_gia')) }} VNĐ</td>
                         <td>{{ data_get($it, 'so_luong') }}</td>
                         <td>{{ number_format(data_get($it, 'don_gia') * data_get($it, 'so_luong')) }} VNĐ</td>
                     </tr>

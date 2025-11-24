@@ -36,6 +36,8 @@ class User extends Authenticatable
         'Ten_dang_nhap', 
         'password',
         'id_phan_quyen',
+        'google_id',
+        'avatar',
     ];
 
     

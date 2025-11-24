@@ -111,6 +111,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Sản phẩm</th>
+                                <th scope="col">Size</th>
                                 <th scope="col">Tiền</th>
                             </tr>
                         </thead>
@@ -118,6 +119,7 @@
                             @foreach ($giohangs as $giohang)
                                 <tr>
                                     <td scope="row">{{ $giohang['ten_giay'] }}</td>
+                                    <td>{{ $giohang['size'] ?? 'Chưa chọn' }}</td>
                                     <td>{{ number_format($km = sprintf('%d', $giohang['so_luong'] * $giohang['don_gia'] - $giohang['so_luong'] * $giohang['don_gia'] * $giohang['khuyen_mai'] * 0.01)) }}
                                         VNĐ</td>
                                 </tr>

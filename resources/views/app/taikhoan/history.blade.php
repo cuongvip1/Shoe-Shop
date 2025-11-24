@@ -28,7 +28,6 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Ngày</th>
                             <th>Người nhận</th>
                             <th>SDT</th>
@@ -40,7 +39,6 @@
                     <tbody>
                         @foreach($myOrders as $o)
                             <tr>
-                                <td>{{ data_get($o, 'id_don_hang') }}</td>
                                 <td>{{ data_get($o, 'created_at') }}</td>
                                 <td>{{ data_get($o, 'ten_nguoi_nhan') }}</td>
                                 <td>{{ data_get($o, 'sdt') }}</td>

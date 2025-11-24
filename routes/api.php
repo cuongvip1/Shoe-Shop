@@ -10,6 +10,7 @@ use App\Models\ThuongHieu;
 use App\Models\KhuyenMai;
 use App\Models\DanhGia;
 
+
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -58,15 +59,6 @@ Route::delete('/users/{id}', function($id) {
 });
 
 
-
-
-        
-        
-
-Route::get('/cua-hang', function() {
-    return Giay::all();
-});
-
 Route::get('/cua-hang/san-pham={id}', function($id) {
     return Giay::findOrFail($id);
 });
@@ -103,11 +95,6 @@ Route::get('/khuyen-mai/{id}', function($id) {
 Route::get('/cua-hang/{id}/update/{num}', function($id, $num) {
     return DB::table('giay')->where('id_giay', $id)->update(['so_luot_xem' => $num]);
 });
-
-
-
-
-
 
 Route::get('/danh-gia', function() {
     return DanhGia::all();

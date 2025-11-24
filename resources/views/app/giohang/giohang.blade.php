@@ -28,6 +28,7 @@
                     <th scope="col">Tên giày</th>
                     <th scope="col">Đơn giá</th>
                     <th scope="col">Khuyến mãi</th>
+                    <th scope="col">Size</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Thành tiền</th>
                     <th scope="col">Thay đổi</th>
@@ -61,10 +62,27 @@
                     <td>{{$giohang['ten_giay']}}</td>
                     <td>{{number_format($giohang['don_gia'])}} VNĐ</td>
                     <td>{{$giohang['khuyen_mai']}}%</td>
-
+                    
                     <form action="/gio-hang/cap-nhat" method="POST">
                         @csrf
                         <input type="hidden" class="form-control" name="id" value="{{$id}}"/>
+                        
+                        <td>
+                            <select name="size" class="form-select form-select-sm">
+                                <option value="">-- Chọn size --</option>
+                                <option value="35" @if(isset($giohang['size']) && $giohang['size'] == 35) selected @endif>35</option>
+                                <option value="36" @if(isset($giohang['size']) && $giohang['size'] == 36) selected @endif>36</option>
+                                <option value="37" @if(isset($giohang['size']) && $giohang['size'] == 37) selected @endif>37</option>
+                                <option value="38" @if(isset($giohang['size']) && $giohang['size'] == 38) selected @endif>38</option>
+                                <option value="39" @if(isset($giohang['size']) && $giohang['size'] == 39) selected @endif>39</option>
+                                <option value="40" @if(isset($giohang['size']) && $giohang['size'] == 40) selected @endif>40</option>
+                                <option value="41" @if(isset($giohang['size']) && $giohang['size'] == 41) selected @endif>41</option>
+                                <option value="42" @if(isset($giohang['size']) && $giohang['size'] == 42) selected @endif>42</option>
+                                <option value="43" @if(isset($giohang['size']) && $giohang['size'] == 43) selected @endif>43</option>
+                                <option value="44" @if(isset($giohang['size']) && $giohang['size'] == 44) selected @endif>44</option>
+                                <option value="45" @if(isset($giohang['size']) && $giohang['size'] == 45) selected @endif>45</option>
+                            </select>
+                        </td>
 
                         <td>
                             <div class="d-flex">

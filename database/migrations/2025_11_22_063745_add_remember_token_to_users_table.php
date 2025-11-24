@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('don_hang', function (Blueprint $table) {
-            $table->enum('trang_thai', ['cho', 'da_xac_nhan', 'tu_choi'])->default('cho')->after('hoa_don');
+        Schema::table('users', function (Blueprint $table) {
+            $table->rememberToken()->nullable()->after('password');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('don_hang', function (Blueprint $table) {
-            $table->dropColumn('trang_thai');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('remember_token');
         });
     }
 };

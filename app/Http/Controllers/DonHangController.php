@@ -114,79 +114,85 @@ class DonHangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        // 'ten_nguoi_nhan', 'sdt', 'dia_chi_nhan', 'ghi_chu', 'ten_giay', 'don_gia', 'so_luong', 'thanh_tien'
-        // serialize() - unserialize()
-        $giohangs = session()->get(key:'gio_hang');
+public function store(Request $request)
+{
+    $giohangs = session()->get('gio_hang');
 
-        // Validate stock availability before creating order
-        $oks = unserialize($request->input('thanh_toans'));
-        foreach ($oks as $id=>$ok) {
-            $giay = Giay::find($id);
-            $requested = intval($ok['so_luong'] ?? ($ok->so_luong ?? 0));
-            $available = $giay ? intval($giay->so_luong) : 0;
-            if ($requested <= 0 || $available <= 0 || $requested > $available) {
-                // Not enough stock for this item
-                session()->flash('thatbai', "Sản phẩm '".($giay->ten_giay ?? $id)."' không đủ số lượng (còn: $available). Vui lòng điều chỉnh giỏ hàng.");
-                return Redirect('/gio-hang');
-            }
+    // Validate stock availability before creating order
+    $oks = unserialize($request->input('thanh_toans'));
+    foreach ($oks as $id => $ok) {
+        $giay = Giay::find($id);
+        $requested = intval($ok['so_luong'] ?? ($ok->so_luong ?? 0));
+        $available = $giay ? intval($giay->so_luong) : 0;
+        if ($requested <= 0 || $available <= 0 || $requested > $available) {
+            session()->flash('thatbai', "Sản phẩm '".($giay->ten_giay ?? $id)."' không đủ số lượng (còn: $available). Vui lòng điều chỉnh giỏ hàng.");
+            return Redirect('/gio-hang');
         }
-
-        $donhang = DonHang::create([
-            'ten_nguoi_nhan' => $request->input('ten_nguoi_nhan'),
-            'sdt' => $request->input('sdt'),
-            'dia_chi_nhan' => $request->input('dia_chi_nhan'),
-            'ghi_chu' => $request->input('ghi_chu'),
-            'tong_tien' => $request->input('tong_tien'),
-            'hoa_don' => $request->input('thanh_toans'),
-            'hinh_thuc_thanh_toan' => $request->input('hinh_thuc_thanh_toan'),
-            
-        ]);
-
-        // $danh_gias = $request->input('thanh_toans');
-        $danh_gias = session()->get(key:'danh_gias');
-        if(!$danh_gias){
-            $danh_gias = array();
-        }
-        // Reduce stock based on purchased quantities and record products into danh_gias session
-        foreach($oks as $id=>$ok){
-            $danh_gias[$id] = $ok;
-            $giay = Giay::find($id);
-            $purchasedQty = intval($ok['so_luong'] ?? ($ok->so_luong ?? 0));
-            if ($giay) {
-                // decrement available stock
-                $giay->so_luong = max(0, intval($giay->so_luong) - $purchasedQty);
-                // increment counter of total sold if field exists
-                if (isset($giay->so_luong_mua)) {
-                    $giay->so_luong_mua = intval($giay->so_luong_mua) + $purchasedQty;
-                }
-                $giay->save();
-            }
-
-        }
-        session()->put('danh_gias', $danh_gias);
-
-        foreach($danh_gias as $iddg=>$danh_gia){
-            // dd($danh_gias);
-            foreach($giohangs as $idgh=>$giohang){
-                if($idgh == $iddg){
-                    unset($giohangs[$idgh]);
-                    // $giohangs[$idgh] = '';
-                }
-            }
-
-        
-
-        }
-
-       
-        // dd($giohangs);
-
-        session()->put('gio_hang', $giohangs);
-
-        return Redirect('/');
     }
+
+
+    $selectedSize = null;
+    foreach ($oks as $ok) {
+        $sizeValue = data_get($ok, 'size');   // so_size (vd: 40)
+        if (!is_null($sizeValue) && $sizeValue !== '') {
+
+            $selectedSize = \DB::table('size')
+                ->where('so_size', intval($sizeValue))
+                ->value('id');
+
+            break;
+        }
+    }
+
+    if (!$selectedSize) {
+        session()->flash('thatbai', "Size không hợp lệ hoặc không tồn tại trong hệ thống.");
+        return Redirect('/gio-hang');
+    }
+
+    $donhang = DonHang::create([
+        'ten_nguoi_nhan' => $request->input('ten_nguoi_nhan'),
+        'sdt' => $request->input('sdt'),
+        'dia_chi_nhan' => $request->input('dia_chi_nhan'),
+        'ghi_chu' => $request->input('ghi_chu'),
+        'tong_tien' => $request->input('tong_tien'),
+        'hoa_don' => $request->input('thanh_toans'),
+        'hinh_thuc_thanh_toan' => $request->input('hinh_thuc_thanh_toan'),
+        'size' => $selectedSize,  
+    ]);
+
+    // Reduce stock and save to session for danh_gias
+    $danh_gias = session()->get('danh_gias', []);
+
+    foreach ($oks as $id => $ok) {
+        $danh_gias[$id] = $ok;
+        $giay = Giay::find($id);
+        $purchasedQty = intval($ok['so_luong'] ?? ($ok->so_luong ?? 0));
+
+        if ($giay) {
+            $giay->so_luong = max(0, intval($giay->so_luong) - $purchasedQty);
+            if (isset($giay->so_luong_mua)) {
+                $giay->so_luong_mua = intval($giay->so_luong_mua) + $purchasedQty;
+            }
+            $giay->save();
+        }
+    }
+
+    session()->put('danh_gias', $danh_gias);
+
+    // Remove purchased items from cart
+    foreach ($danh_gias as $iddg => $danh_gia) {
+        foreach ($giohangs as $idgh => $giohang) {
+            if ($idgh == $iddg) {
+                unset($giohangs[$idgh]);
+            }
+        }
+    }
+
+    session()->put('gio_hang', $giohangs);
+
+    return Redirect('/');
+}
+
 
     /**
      * Display the specified resource.

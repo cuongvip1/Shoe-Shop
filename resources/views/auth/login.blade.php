@@ -73,7 +73,12 @@
                                     <button class="btn btn-primary btn-lg  btn-block fa-lg gradient-custom-2 mb-3" type="submit">Đăng nhập</button>
                                     <a class="text-muted" href="">Quên mật khẩu?</a>
                                 </div>
-
+                                <div class="text-center mb-4">
+                                    <p class="mb-2">Hoặc</p>
+                                    <a href="{{ route('google.redirect') }}" class="btn btn-danger btn-lg btn-block">
+                                        <i class="fab fa-google me-2"></i> Đăng nhập bằng Google
+                                    </a>
+                                </div>
                                 <div class="d-flex align-items-center justify-content-center pb-4">
                                     <p class="mb-0 me-2">Chưa có tài khoản?</p>
                                     <a href="{{ route('auth.register') }}" type="button" class="btn btn-outline-danger">Đăng ký</a>

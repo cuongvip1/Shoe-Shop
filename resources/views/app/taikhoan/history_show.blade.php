@@ -41,6 +41,7 @@
                     <thead>
                         <tr>
                             <th>Tên giày</th>
+                            <th>Size</th>
                             <th>Đơn giá</th>
                             <th>Số lượng</th>
                             <th>Thành tiền</th>
@@ -50,6 +51,7 @@
                         @foreach($items as $it)
                             <tr>
                                 <td>{{ data_get($it, 'ten_giay') }}</td>
+                                <td>{{ data_get($it, 'size', 'Chưa chọn') }}</td>
                                 <td>{{ number_format(data_get($it, 'don_gia')) }}</td>
                                 <td>{{ data_get($it, 'so_luong') }}</td>
                                 <td>{{ number_format((data_get($it, 'don_gia') * data_get($it, 'so_luong'))) }}</td>
