@@ -41,6 +41,8 @@ Route::get('/tai-khoan/lich-su/xem/id={id}', [App\Http\Controllers\MainControlle
 
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 Route::post('/auth/save', [MainController::class, 'storeReg'])->name('registerStore');
 Route::get('/auth/logoff', [MainController::class, 'dangXuat'])->name('auth.logoff');
 
