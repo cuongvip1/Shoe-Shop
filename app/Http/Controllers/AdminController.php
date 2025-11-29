@@ -25,7 +25,7 @@ class AdminController extends Controller
         if(session()->get(key:'check') == 1){
             $api = new ApiClient();
             $users = $api->get('/api/users');
-            $giays = $api->get('/api/giay');
+            $giays = $this->fetchAllAdminGiays($api);
             $loaigiays = $api->get('/api/loai-giay');
             $thuonghieus = $api->get('/api/thuong-hieu');
             $khuyenmais = $api->get('/api/khuyen-mai');
@@ -183,7 +183,7 @@ class AdminController extends Controller
             $api = new ApiClient();
             $thuonghieus = $api->get('/api/thuong-hieu');
             $loaigiays = $api->get('/api/loai-giay');
-            $giays = $api->get('/api/giay');
+            $giays = $this->fetchAllAdminGiays($api);
             $users = $api->get('/api/users');
             $khuyenmais = $api->get('/api/khuyen-mai');
             $phanquyens = $api->get('/api/phan-quyen');
@@ -250,7 +250,7 @@ class AdminController extends Controller
             $api = new ApiClient();
             $thuonghieus = $api->get('/api/thuong-hieu');
             $loaigiays = $api->get('/api/loai-giay');
-            $giays = $api->get('/api/giay');
+            $giays = $this->fetchAllAdminGiays($api);
             $users = $api->get('/api/users');
             $phanquyens = $api->get('/api/phan-quyen');
             $khuyenmais = $api->get('/api/khuyen-mai');
@@ -311,4 +311,16 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Fetch the full giay catalog for admin views by requesting a larger page size.
+     */
+    private function fetchAllAdminGiays(ApiClient $api, array $filters = [])
+    {
+        $perPage = (int) env('ADMIN_GIAY_PER_PAGE', 200);
+        if ($perPage < 1) {
+            $perPage = 200;
+        }
+
+        return $api->get('/api/giay', array_merge(['per_page' => $perPage], $filters));
+    }
 }

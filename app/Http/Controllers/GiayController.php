@@ -91,7 +91,7 @@ class GiayController extends Controller
             
         ]);
 
-        return Redirect('/admin/giay');
+        return redirect('/admin/giay/giay');
     }
 
     /**
@@ -210,7 +210,7 @@ class GiayController extends Controller
         $giay['ten_khuyen_mai'] = $request->ten_khuyen_mai;
 
         $giay->save();
-        return Redirect('/admin/giay');
+        return redirect('/admin/giay/giay');
 
         // return $request->file('hinh_anh_1')->storeAs('public/images', $hinh1);
     }
@@ -226,6 +226,6 @@ class GiayController extends Controller
         /// xóa
         $data = Giay::find($id);
         $data->delete();
-        return Redirect('/admin/giay');
+        return redirect('/admin/giay/giay');
     }
 }
